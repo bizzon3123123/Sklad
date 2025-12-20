@@ -1,0 +1,160 @@
+classDiagram
+    %% Основные классы
+    class Warehouse {
+        -id: Int
+        -name: String
+        -address: String
+        -area: double
+        +addProduct()
+        +removeProduct()
+        +checkAvailability()
+        +updateInventory()
+    }
+
+    class Product {
+        -id: Int
+        -name: String
+        -description: String
+        -category: String
+        -price: double
+        -weight: double
+        -dimensions: String
+        -quantity: int
+        +updateInfo()
+        +changePrice()
+    }
+
+    class ProductOrder {
+        -id: Int
+        -orderDate: Date
+        -expectedDate: Date
+        -status: String
+        -totalCost: double
+        -supplierId: int
+        +createOrder()
+        +updateStatus()
+        +calculateCost()
+        +receiveOrder()
+    }
+
+    class Rack {
+        -id: Int
+        -number: String
+        -section: String
+        -level: int
+        -capacity: int
+        -currentLoad: int
+        +findFreeSpace()
+        +getInfo()
+    }
+
+    class Supplier {
+        -id: Int
+        -name: String
+        -contacts: String
+        -rating: double
+        +addSupplier()
+        +updateRating()
+    }
+
+    class Order {
+        -id: Int
+        -creationDate: Date
+        -status: String
+        -totalCost: double
+        +createOrder()
+        +changeStatus()
+        +calculateCost()
+    }
+
+    class Customer {
+        -id: Int
+        -name: String
+        -phone: String
+        -email: String
+        -address: String
+        +register()
+        +updateData()
+    }
+
+    class Employee {
+        -id: Int
+        -name: String
+        -position: String
+        -shift: String
+        -accessLevel: int
+        +authenticate()
+        +performOperation()
+    }
+
+    %% Новый класс Чек
+    class Receipt {
+        -id: Int
+        -creationDate: Date
+        -totalAmount: double
+        -employeeId: int
+        -customerId: int
+        +scanProduct()
+        +removeProduct()
+        +calculateTotal()
+        +printReceipt()
+    }
+
+    class Operation {
+        -id: Int
+        -type: String
+        -datetime: DateTime
+        -employeeId: int
+        -description: String
+        +register()
+    }
+
+    class Inventory {
+        -id: Int
+        -date: Date
+        -result: String
+        -discrepancies: int
+        +startInventory()
+        +completeInventory()
+    }
+
+    %% Наследование
+    class Storekeeper {
+        -responsibilityZone: String
+        +receiveGoods()
+        +shipGoods()
+    }
+
+    class Manager {
+        -department: String
+        -accessRights: String
+        +manageUsers()
+        +generateReports()
+        +manageOrders()
+        +workWithSuppliers()
+    }
+
+    %% Связи
+    Warehouse "1" *-- "*" Rack : содержит
+    Warehouse "1" -- "*" Product : хранит
+    Rack "1" -- "*" Product : размещает
+    
+    Supplier "1" -- "*" ProductOrder : поставляет
+    ProductOrder "1" -- "*" Product : заказывает
+    
+    Customer "1" -- "*" Order : создает
+    Order "1" -- "*" Product : содержит
+    
+    Employee "1" -- "*" Order : обрабатывает
+    Employee "1" -- "*" ProductOrder : управляет
+    Employee "1" -- "*" Operation : выполняет
+    Employee "1" -- "*" Inventory : проводит
+
+    %% Новые связи для чека
+    Receipt "1" -- "*" Product : содержит
+    Employee "1" -- "*" Receipt : оформляет
+    Customer "1" -- "*" Receipt : получает
+
+    %% Наследование
+    Employee <|-- Storekeeper
+    Employee <|-- Manager
