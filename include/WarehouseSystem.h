@@ -1,0 +1,15 @@
+#pragma once
+// Главный заголовочный файл, который может включать все остальные
+#include "Warehouse.h"
+#include "Product.h"
+#include "Rack.h"
+#include "Supplier.h"
+#include "ProductOrder.h"
+#include "Customer.h"
+#include "Employee.h"
+#include "Storekeeper.h"
+#include "Manager.h"
+#include "Order.h"
+#include "Receipt.h"
+#include "Operation.h"
+#include "Inventory.h"
